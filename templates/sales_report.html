@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Sales Report - Staff - Fresh Harvest{% endblock %}
+
+{% block content %}
+<head>
+    <title>Sales Report</title>
+</head>
+<body>
+    <h1>Sales Report</h1>
+
+    <h2>Total Sales</h2>
+    <p>Last Week: ${{ week }}</p>
+    <p>Last Month: ${{ month }}</p>
+    <p>Last Year: ${{ year }}</p>
+
+    <h2>Total Orders</h2>
+    <p>Last Week: {{ orders_week }}</p>
+    <p>Last Month: {{ orders_month }}</p>
+    <p>Last Year: {{ orders_year }}</p>
+
+    <h2>Average Order Value</h2>
+    <p>Last Week: ${{ avg_order_week | round(2) }}</p>
+    <p>Last Month: ${{ avg_order_month | round(2) }}</p>
+    <p>Last Year: ${{ avg_order_year | round(2) }}</p>
+
+    <h2>Top Selling Items (Last Month)</h2>
+    <ul>
+    {% for item, total_quantity in top_items %}
+        <li>{{ item.display_name }} - Sold Quantity: {{ total_quantity }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Sales by Customer Type (Last Month)</h2>
+    <p>Private Customers: ${{ private_sales }}</p>
+    <p>Corporate Customers: ${{ corporate_sales }}</p>
+
+    <a href="{{ url_for('staff_dashboard') }}">Back to Dashboard</a>
+</body>
+{% endblock %}
+

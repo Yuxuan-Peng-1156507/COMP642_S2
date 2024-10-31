@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard - Fresh Harvest{% endblock %}
+
+{% block content %}
+<head>
+    <title>Order Details - Staff View</title>
+</head>
+<body>
+    <h1>Order Number: {{ order.order_number }}</h1>
+    <p>Order Date: {{ order.order_date }}</p>
+    <p>Order Status: {{ order.order_status }}</p>
+    <p>Customer: {{ order.customer.first_name }} {{ order.customer.last_name }}</p>
+    <p>Delivery Option: {{ order.delivery_option }}</p>
+
+    <h2>Items</h2>
+    <ul>
+    {% for line in order.list_of_items %}
+        <li>
+            {{ line.item_number }} x {{ line.item.display_name }}
+            {% if line.item.item_type == 'weighted_veggie' %}
+                ({{ line.weight }} kg)
+            {% endif %}
+            - {{ line.item.display_price }}
+        </li>
+    {% endfor %}
+    </ul>
+
+    <p>Total Amount: ${{ total }}</p>
+    <a href="{% if source == 'past_orders' %}{{ url_for('staff_view_past_orders') }}{% else %}{{ url_for('view_current_orders') }}{% endif %}">Back</a>
+</body>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}View Vegetables - Fresh Harvest{% endblock %}
+
+{% block content %}
+    <h1>Available Vegetables</h1>
+    <ul>
+        {% for veggie in veggies %}
+            <li>
+                <strong>{{ veggie.veg_name }}</strong> - 
+                {% if veggie.veg_type == 'unit_price' %}
+                    ${{ veggie.price_per_unit }} per unit
+                {% elif veggie.veg_type == 'pack' %}
+                    ${{ veggie.price_per_pack }} per pack ({{ veggie.pack_size }} pack)
+                {% elif veggie.veg_type == 'weighted' %}
+                    ${{ veggie.price_per_kilo }} per kilogram
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('customer_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}View Premade Boxes - Fresh Harvest{% endblock %}
+
+{% block content %}
+    <h1>Premade Vegetable Boxes</h1>
+    <ul>
+        {% for box in premade_boxes %}
+            <li>
+                <strong>{{ box.box_size.capitalize() }} Box</strong> - ${{ '%.2f' | format(box.price) }}
+                <ul>
+                    {% for veggie in box.veggies %}
+                        <li>{{ veggie.veg_name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('customer_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
+

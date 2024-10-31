@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Order Details - Fresh Harvest{% endblock %}
+
+{% block content %}
+    <h1>Order Number: {{ order.order_number }}</h1>
+    <p>Order Date: {{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <p>Status: {{ order.order_status }}</p>
+    <p>Delivery Option: {{ 'Delivery ($10)' if order.delivery_option == 'delivery' else 'Pickup' }}</p>
+    
+    <h2>Items</h2>
+    <ul>
+        {% for line in order.list_of_items %}
+        <li>
+            {{ line.item_number }} x {{ line.item.display_name }}
+            {% if line.item.item_type == 'weighted_veggie' %}
+                ({{ line.weight }} kg)
+            {% endif %}
+            - {{ line.item.display_price }}
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <h3>Total Amount: ${{ '%.2f' | format(total) }}</h3>
+    
+    {% if order.order_status == 'Pending' %}
+        <a href="{{ url_for('cancel_order', order_id=order.id) }}">Cancel Order</a>
+    {% endif %}
+    
+    <br><br>
+    <a href="{{ url_for('customer_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
+

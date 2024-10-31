@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Dashboard - Fresh Harvest{% endblock %}
+
+{% block content %}
+    <h1>Welcome, Staff Member</h1>
+    
+    <h2>Actions</h2>
+    <ul>
+        <li><a href="{{ url_for('staff_view_items') }}">View Items</a></li>
+        <li><a href="{{ url_for('view_current_orders') }}">View Current Orders</a></li>
+        <li><a href="{{ url_for('staff_view_past_orders') }}">View Past Orders</a></li>
+        <li><a href="{{ url_for('view_customers') }}">View Customers</a></li>
+        <li><a href="{{ url_for('generate_sales_report') }}">Generate Sales Report</a></li>
+        <li><a href="{{ url_for('view_popular_items') }}">View Popular Items</a></li>
+        <li><a href="{{ url_for('view_unpopular_items') }}">View Unpopular Items</a></li>
+        <li><a href="{{ url_for('staff_place_order') }}">Place Order for Customer</a></li>
+    </ul>
+{% endblock %}
+

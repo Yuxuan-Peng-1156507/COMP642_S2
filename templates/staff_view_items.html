@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}View Items - Staff - Fresh Harvest{% endblock %}
+
+{% block content %}
+    <h1>View Items</h1>
+    
+    <h2>Vegetables</h2>
+    <ul>
+        {% for veggie in veggies %}
+            <li>
+                <strong>{{ veggie.veg_name }}</strong> - 
+                {% if veggie.veg_type == 'unit_price' %}
+                    ${{ veggie.price_per_unit }} per unit
+                {% elif veggie.veg_type == 'pack' %}
+                    ${{ veggie.price_per_pack }} per pack ({{ veggie.pack_size }} pack)
+                {% elif veggie.veg_type == 'weighted' %}
+                    ${{ veggie.price_per_kilo }} per kilogram
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Premade Boxes</h2>
+    <ul>
+        {% for box in premade_boxes %}
+            <li>
+                <strong>{{ box.box_size.capitalize() }} Box</strong> - ${{ '%.2f' | format(box.price) }}
+                <ul>
+                    {% for veggie in box.veggies %}
+                        <li>{{ veggie.veg_name }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{{ url_for('staff_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
+

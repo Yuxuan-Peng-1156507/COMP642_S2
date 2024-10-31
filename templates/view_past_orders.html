@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Your Orders - Fresh Harvest{% endblock %}
+
+{% block content %}
+    <h1>Your Orders</h1>
+
+    <h2>Current Orders</h2>
+    {% if current_orders %}
+        <ul>
+            {% for order in current_orders %}
+                <li>
+                    <a href="{{ url_for('view_order', order_id=order.id) }}">Order #{{ order.order_number }}</a> - 
+                    {{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }} - 
+                    Status: {{ order.order_status }} - 
+                    Total: ${{ '%.2f' | format(calculate_order_total(order, order.delivery_option)) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No current orders found.</p>
+    {% endif %}
+
+    <h2>Past Orders</h2>
+    {% if past_orders %}
+        <ul>
+            {% for order in past_orders %}
+                <li>
+                    <a href="{{ url_for('view_order', order_id=order.id) }}">Order #{{ order.order_number }}</a> - 
+                    {{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }} - 
+                    Status: {{ order.order_status }} - 
+                    Total: ${{ '%.2f' | format(calculate_order_total(order, order.delivery_option)) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No past orders found.</p>
+    {% endif %}
+
+    <a href="{{ url_for('customer_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
