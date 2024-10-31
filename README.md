@@ -82,6 +82,8 @@ Staff members can:
 
 - The payment method for placing orders is simulated. Only account balance deduction is validated. Other payment methods (credit/debit card) do not have strict input validation in this version.
 
-- The application is hosted on PythonAnywhere and can be accessed here: (https://yuxuanpeng642.pythonanywhere.com/).
+- The application is hosted on PythonAnywhere and can be accessed here: https://yuxuanpeng642.pythonanywhere.com/
+
+- GitHub:https://github.com/Yuxuan-Peng-1156507/COMP642_S2.git
 
 If you have any questions or issues, feel free to reach out!
