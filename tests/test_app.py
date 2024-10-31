@@ -173,5 +173,4 @@ def test_create_premade_box(client):
     assert response.status_code == 200 or response.status_code == 302
     assert b"Cart" in response.data or b"Create Your Custom Premade Box" in response.data
 
-# place order
 
