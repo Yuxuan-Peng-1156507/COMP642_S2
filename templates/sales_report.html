@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            padding: 20px;
+        }
+        .report-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2e8b57;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <h1>Sales Report</h1>
+        
+        <div class="section">
+            <h2>Total Sales</h2>
+            <p><strong>Last Week:</strong> ${{ week_sales }}</p>
+            <p><strong>Last Month:</strong> ${{ month_sales }}</p>
+            <p><strong>Last Year:</strong> ${{ year_sales }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Most Popular Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in popular_products %}
+                    <tr>
+                        <td>{{ product.product_name }}</td>
+                        <td>{{ product.quantity_sold }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Back to Dashboard button -->
+        <a href="{{ url_for('staff_dashboard') }}" class="back-button">Back to Dashboard</a>
+    </div>
+</body>
+</html>

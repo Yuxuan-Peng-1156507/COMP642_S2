@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Payment{% endblock %}
+
+{% block content %}
+<h1>Confirm Payment</h1>
+<p>Order ID: {{ order.id }}</p>
+<p>Total Amount: ${{ order.total_amount }}</p>
+<p>Payment Method: {{ payment_type | capitalize }}</p>
+
+<form action="{{ url_for('confirm_payment', order_id=order.id, payment_type=payment_type) }}" method="POST">
+    <button type="submit">Confirm and Complete Payment</button>
+</form>
+
+<a href="{{ url_for('select_payment', order_id=order.id) }}">
+    <button type="button">Back to Payment Selection</button>
+</a>
+{% endblock %}

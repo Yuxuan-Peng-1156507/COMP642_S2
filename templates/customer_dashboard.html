@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ customer.name }}!</h1>
+
+<div class="dashboard-buttons">
+    <a href="{{ url_for('view_orders') }}">
+        <button type="button">View Orders</button>
+    </a>
+    <a href="{{ url_for('get_vegetables') }}">
+        <button type="button">View Vegetables</button>
+    </a>
+    <a href="{{ url_for('view_premade_boxes') }}">
+        <button type="button">View Premade Boxes</button>
+    </a>
+    <a href="{{ url_for('profile') }}">
+        <button type="button">View Profile</button>
+    </a>
+    <a href="{{ url_for('cart') }}">
+        <button type="button">Go to Cart</button>
+    </a>
+</div>
+{% endblock %}

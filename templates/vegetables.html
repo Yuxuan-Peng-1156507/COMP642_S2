@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Available Vegetables{% endblock %}
+
+{% block content %}
+<h1>Available Vegetables</h1>
+<ul class="vegetable-list">
+    {% for vegetable in vegetables %}
+    <li class="vegetable-item">
+        <strong>{{ vegetable.name }}</strong> - ${{ (vegetable.price_per_kg | default(0)) | round(2) }}
+        <form action="{{ url_for('add_to_cart') }}" method="POST" class="add-to-cart-form">
+            <input type="hidden" name="product_id" value="{{ vegetable.id }}">
+            <input type="hidden" name="product_type" value="vegetable">
+            <label for="quantity_{{ vegetable.id }}">Quantity:</label>
+            <input type="number" id="quantity_{{ vegetable.id }}" name="quantity" min="1" value="1" class="quantity-input">
+            <button type="submit" class="add-to-cart-button">Add to Cart</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('cart') }}" class="view-cart-button">View Cart</a>
+{% endblock %}

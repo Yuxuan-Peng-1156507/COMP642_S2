@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Top Up Account Balance{% endblock %}
+
+{% block content %}
+<h1>Top Up Your Account Balance</h1>
+
+<!-- 显示错误信息 -->
+{% if error_message %}
+    <div class="error-message" style="color: red;">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+<!-- 显示成功信息 -->
+{% if success_message %}
+    <div class="success-message" style="color: green;">
+        {{ success_message }}
+    </div>
+{% endif %}
+
+<form action="{{ url_for('topup') }}" method="POST">
+    <label for="topup_amount">Enter Amount to Top Up:</label>
+    <input type="number" name="topup_amount" id="topup_amount" min="1" required>
+    <button type="submit">Top Up</button>
+</form>
+
+<div class="buttons">
+    <a href="{{ url_for('customer_dashboard') }}">
+        <button type="button">Back to Dashboard</button>
+    </a>
+</div>
+{% endblock %}

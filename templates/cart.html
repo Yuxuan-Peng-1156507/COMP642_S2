@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+<h1>Your Shopping Cart</h1>
+
+{% if products %}
+<ul>
+    {% for item in products %}
+    <li>
+        {{ item.name }} - ${{ item.price }} x {{ item.quantity }} = ${{ item.total }}
+    </li>
+    {% endfor %}
+</ul>
+
+<form action="{{ url_for('place_order') }}" method="POST">
+    <button type="submit">Proceed to Checkout</button>
+</form>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+
+<div class="additional-actions">
+    <a href="{{ url_for('get_vegetables') }}">
+        <button type="button">Add More Vegetables</button>
+    </a>
+    <a href="{{ url_for('view_premade_boxes') }}">
+        <button type="button">Add More Premade Boxes</button>
+    </a>
+</div>
+
+<!-- Back to Dashboard button -->
+<a href="{{ url_for('customer_dashboard') }}">
+    <button type="button">Back to Dashboard</button>
+</a>
+{% endblock %}

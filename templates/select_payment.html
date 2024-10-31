@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Select Payment Method{% endblock %}
+
+{% block content %}
+<h1>Select Payment Method</h1>
+<p>Order ID: {{ order.id }}</p>
+<p>Total Amount: ${{ total_amount }}</p>
+
+<!-- 显示错误信息 -->
+{% if error_message %}
+    <div class="error-message" style="color: red;">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+<form action="{{ url_for('select_payment', order_id=order.id) }}" method="POST">
+    <label for="payment_type">Choose Payment Method:</label>
+    <select name="payment_type" id="payment_type" required>
+        <option value="credit_card">Credit Card</option>
+        <option value="debit_card">Debit Card</option>
+        <option value="account">Account Balance</option>
+    </select>
+    <button type="submit">Proceed to Payment</button>
+</form>
+
+<div class="buttons">
+    <a href="{{ url_for('checkout', order_id=order.id) }}">
+        <button type="button">Back to Checkout</button>
+    </a>
+</div>
+{% endblock %}

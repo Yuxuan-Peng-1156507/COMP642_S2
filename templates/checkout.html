@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<h1>Checkout</h1>
+<p>Order ID: {{ order.id }}</p>
+<p>Total Amount: ${{ order.total_amount }}</p>
+
+<form method="POST" action="{{ url_for('checkout', order_id=order.id) }}">
+    <label for="delivery_method">Choose Delivery Method:</label>
+    <select name="delivery_method" id="delivery_method" required>
+        <option value="pickup">Pickup</option>
+        <option value="delivery">Delivery</option>
+    </select>
+
+    <div id="delivery_address_field" style="display: none; margin-top: 10px;">
+        <label for="delivery_address">Delivery Address:</label>
+        <input type="text" name="delivery_address" id="delivery_address" placeholder="Enter your delivery address">
+    </div>
+
+    <button type="submit">Confirm and Place Order</button>
+</form>
+
+<a href="{{ url_for('cart') }}">
+    <button type="button">Back to Cart</button>
+</a>
+
+<script>
+    document.getElementById('delivery_method').addEventListener('change', function() {
+        var addressField = document.getElementById('delivery_address_field');
+        if (this.value === 'delivery') {
+            addressField.style.display = 'block';
+        } else {
+            addressField.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

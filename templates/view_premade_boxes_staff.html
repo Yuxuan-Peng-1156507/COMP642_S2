@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - Premade Boxes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .box-list {
+            width: 80%;
+            max-width: 600px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .box-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .box-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #007bff;
+        }
+        .box-details {
+            font-size: 16px;
+            color: #555;
+            margin-top: 5px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Available Premade Boxes</h1>
+    <ul class="box-list">
+        {% for box in boxes %}
+            <li class="box-item">
+                <span class="box-name">{{ box.name }}</span>
+                <span class="box-details">Price: ${{ box.price | round(2) }} - Size: {{ box.size }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('staff_dashboard') }}" class="back-button">Back to Dashboard</a>
+</body>
+</html>

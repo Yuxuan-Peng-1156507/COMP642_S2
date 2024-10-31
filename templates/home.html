@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* 设置字体 */
+            background-color: #f8f8f8; /* 页面背景颜色 */
+            margin: 0; /* 去掉默认边距 */
+        }
+
+        .homepage-container {
+            text-align: center; /* 居中对齐文本 */
+            padding: 50px; /* 内边距 */
+            background-color: #fff; /* 白色背景 */
+            border-radius: 10px; /* 圆角 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            margin: 50px auto; /* 上下间距，自动左右对齐 */
+            max-width: 600px; /* 最大宽度 */
+        }
+
+        h1 {
+            color: #2e8b57; /* 深绿色标题 */
+            font-size: 2.5em; /* 标题字体大小 */
+            margin-bottom: 20px; /* 下方间距 */
+        }
+
+        p {
+            color: #555; /* 浅灰色文本 */
+            font-size: 1.2em; /* 文本字体大小 */
+            margin-bottom: 30px; /* 下方间距 */
+        }
+
+        .button-container {
+            display: flex; /* 使用弹性盒布局 */
+            justify-content: center; /* 水平居中对齐 */
+        }
+
+        .btn {
+            background-color: #4CAF50; /* 绿色按钮 */
+            color: white;
+            padding: 10px 20px; /* 内边距 */
+            text-decoration: none; /* 去掉下划线 */
+            border-radius: 5px; /* 圆角 */
+            margin: 0 10px; /* 左右间距 */
+            transition: background-color 0.3s; /* 背景色过渡效果 */
+            font-size: 1em; /* 按钮字体大小 */
+        }
+
+        .btn:hover {
+            background-color: #45a049; /* 悬停时变色 */
+        }
+    </style>
+</head>
+<body>
+    <div class="homepage-container">
+        <h1>Welcome to the Fresh Harvest App!</h1>
+        <p>Your one-stop solution for fresh vegetables and premade boxes delivered right to your door.</p>
+        <p>Please log in or register to start your fresh journey!</p>
+        
+        <div class="button-container">
+            <a href="/login" class="btn">Login</a>
+            <a href="/register" class="btn">Register</a>
+        </div>
+    </div>
+</body>
+</html>

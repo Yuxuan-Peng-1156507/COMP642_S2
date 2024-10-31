@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Transaction Complete{% endblock %}
+
+{% block content %}
+<h1>Transaction Successful!</h1>
+<p>Your order with ID {{ order.id }} has been completed successfully.</p>
+<p>Total Amount: ${{ order.total_amount }}</p>
+
+<!-- Buttons to navigate to Dashboard and View Orders -->
+<div class="buttons">
+    <a href="{{ url_for('customer_dashboard') }}">
+        <button type="button">Back to Dashboard</button>
+    </a>
+    <a href="{{ url_for('view_orders') }}">
+        <button type="button">View Orders</button>
+    </a>
+</div>
+{% endblock %}
