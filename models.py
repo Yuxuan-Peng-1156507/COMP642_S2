@@ -13,7 +13,7 @@ premade_box_vegetable = Table(
     Base.metadata,
     Column('premade_box_id', Integer, ForeignKey('premade_boxes.id'), primary_key=True),
     Column('vegetable_id', Integer, ForeignKey('vegetables.id'), primary_key=True),
-    Column('weight', Float, nullable=False)  # Weight of each vegetable in the box
+    Column('weight', Float, nullable=False)  
 )
 
 class Customer(Base):
@@ -42,7 +42,7 @@ class Vegetable(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     price_per_kg = Column(Float, nullable=False)
-    stock_quantity = Column(Float, default=0.0)  # Stock in kilograms
+    stock_quantity = Column(Float, default=0.0) 
 
     boxes = relationship('PremadeBox', secondary=premade_box_vegetable, back_populates='contents')
 
@@ -54,7 +54,7 @@ class PremadeBox(Base):
     size = Column(String(50), nullable=False)
     max_weight = Column(Float, nullable=False)
     base_price = Column(Float, nullable=False)
-    price = Column(Float, nullable=False)  # 添加此字段
+    price = Column(Float, nullable=False)  
     description = Column(String(255))
     is_default = Column(Boolean, default=False)
     contents = relationship('Vegetable', secondary=premade_box_vegetable, back_populates='boxes')
@@ -103,12 +103,12 @@ class OrderItem(Base):
     order_id = Column(Integer, ForeignKey('orders.id'))
     product_type = Column(Enum('vegetable', 'premade_box'), nullable=False)
     product_id = Column(Integer, nullable=False)
-    quantity = Column(Float, nullable=False)  # Quantity in units or weight
+    quantity = Column(Float, nullable=False)  
     price = Column(Float, nullable=False)
 
     order = relationship('Order', back_populates='items')
 
 # Database configuration
-DATABASE_URI = 'mysql+pymysql://root:@localhost/fresh_harvest'  # Replace with your database credentials
+DATABASE_URI = 'mysql+pymysql://root:@localhost/fresh_harvest' 
 engine = create_engine(DATABASE_URI, echo=True)
 Base.metadata.create_all(engine)

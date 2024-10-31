@@ -5,14 +5,12 @@
 {% block content %}
 <h1>Top Up Your Account Balance</h1>
 
-<!-- 显示错误信息 -->
 {% if error_message %}
     <div class="error-message" style="color: red;">
         {{ error_message }}
     </div>
 {% endif %}
 
-<!-- 显示成功信息 -->
 {% if success_message %}
     <div class="success-message" style="color: green;">
         {{ success_message }}

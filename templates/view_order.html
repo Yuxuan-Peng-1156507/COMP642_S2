@@ -17,12 +17,10 @@
 
 <a href="{{ url_for('view_orders') }}" class="back-to-orders-button">Back to Orders</a>
 
-<!-- Show Cancel Order button if status is Pending -->
 {% if order.status == 'Pending' %}
     <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post" class="cancel-order-form">
         <button type="submit" class="cancel-order-button">Cancel Order</button>
     </form>
-    <!-- Proceed to Payment button for Pending orders -->
     <form action="{{ url_for('select_payment', order_id=order.id) }}" method="get" class="proceed-to-payment-form">
         <button type="submit" class="proceed-to-payment-button">Proceed to Payment</button>
     </form>

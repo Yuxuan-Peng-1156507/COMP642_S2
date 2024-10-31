@@ -5,7 +5,6 @@
 {% block content %}
 <h1>Your Orders</h1>
 
-<!-- Display message if available -->
 {% if message %}
     <p class="message">{{ message }}</p>
 {% endif %}
@@ -16,7 +15,6 @@
             <span><strong>Order ID:</strong> {{ order.id }} - <strong>Total:</strong> ${{ order.total_amount }} - <strong>Status:</strong> {{ order.status }}</span>
             <a href="{{ url_for('view_order', order_id=order.id) }}" class="view-details-button">View Details</a>
 
-            <!-- Show cancel button only for pending orders -->
             {% if order.status == 'Pending' %}
                 <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="POST" class="cancel-order-form" style="display:inline;">
                     <button type="submit" class="cancel-order-button">Cancel Order</button>

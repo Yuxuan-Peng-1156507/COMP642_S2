@@ -7,7 +7,7 @@ from models import Base, Customer, Staff, Vegetable, PremadeBox, Order, OrderIte
 # Set up a temporary SQLite database for testing
 @pytest.fixture(scope='module')
 def db_session():
-    engine = create_engine('sqlite:///:memory:')  # In-memory database for tests
+    engine = create_engine('sqlite:///:memory:')  
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -45,7 +45,7 @@ def test_create_staff(db_session):
 def test_create_vegetable(db_session):
     vegetable = Vegetable(
         name="Carrot",
-        price=1.5,
+        price_per_kg=1.5,  # 修复字段名称
         stock_quantity=100
     )
     db_session.add(vegetable)
@@ -55,6 +55,19 @@ def test_create_vegetable(db_session):
 
 def test_create_order(db_session):
     customer = db_session.query(Customer).first()
+    if not customer:
+
+        customer = Customer(
+            name="Test User",
+            email="testuser@example.com",
+            password="hashedpassword",
+            address="123 Test St",
+            account_balance=100.0,
+            created_at=datetime.now()
+        )
+        db_session.add(customer)
+        db_session.commit()
+
     order = Order(
         customer_id=customer.id,
         status="Pending",
@@ -70,13 +83,21 @@ def test_create_order(db_session):
 
 def test_create_order_item(db_session):
     order = db_session.query(Order).first()
+    if not order:
+        test_create_order(db_session)
+        order = db_session.query(Order).first()
+
     vegetable = db_session.query(Vegetable).first()
+    if not vegetable:
+        test_create_vegetable(db_session)
+        vegetable = db_session.query(Vegetable).first()
+
     order_item = OrderItem(
         order_id=order.id,
         product_type="vegetable",
         product_id=vegetable.id,
         quantity=5,
-        price=vegetable.price
+        price=vegetable.price_per_kg
     )
     db_session.add(order_item)
     db_session.commit()

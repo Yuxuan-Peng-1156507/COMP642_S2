@@ -3,11 +3,9 @@ from werkzeug.security import generate_password_hash
 from models import Customer, Staff, Vegetable, PremadeBox, Order, OrderItem, Base, engine
 from datetime import datetime, timedelta
 
-# Create database session
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
-# Clear existing data (optional)
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
@@ -65,16 +63,16 @@ vegetables = [
 
 # Insert Premade Boxes
 premade_boxes = [
-    PremadeBox(name="Small Box", size="Small", max_weight=5.0, base_price=10.0, price=15.0, description="A small box of mixed vegetables"),
-    PremadeBox(name="Medium Box", size="Medium", max_weight=10.0, base_price=15.0, price=25.0, description="A medium box of mixed vegetables"),
-    PremadeBox(name="Large Box", size="Large", max_weight=20.0, base_price=20.0, price=35.0, description="A large box of mixed vegetables"),
+    PremadeBox(name="Small Box", size="Small", max_weight=5.0, base_price=10.0, price=15.0, description="A small box of mixed vegetables", is_default=True),
+    PremadeBox(name="Medium Box", size="Medium", max_weight=10.0, base_price=15.0, price=25.0, description="A medium box of mixed vegetables", is_default=True),
+    PremadeBox(name="Large Box", size="Large", max_weight=20.0, base_price=20.0, price=35.0, description="A large box of mixed vegetables", is_default=True),
 ]
+
 
 # Add customers, staff, vegetables, and premade boxes to session
 db_session.add_all(customers + staff_members + vegetables + premade_boxes)
 db_session.commit()
 
-# Retrieve inserted vegetables and premade boxes for order item creation
 vegetable_items = db_session.query(Vegetable).all()
 box_items = db_session.query(PremadeBox).all()
 
@@ -84,7 +82,6 @@ for i in range(10):
     order_date = datetime.now() - timedelta(days=i)
     customer = customers[i % len(customers)]  # Rotate through customers
 
-    # Alternate delivery method between 'pickup' and 'delivery'
     delivery_method = 'pickup' if i % 2 == 0 else 'delivery'
     delivery_fee = 0.0 if delivery_method == 'delivery' else 0.0
 
@@ -100,7 +97,6 @@ for i in range(10):
         customer=customer
     )
 
-    # Add two items to each order
     vegetable = vegetable_items[i % len(vegetable_items)]
     premade_box = box_items[i % len(box_items)]
 
@@ -120,7 +116,6 @@ for i in range(10):
 
     orders.append(order)
 
-# Add all orders to session and commit
 db_session.add_all(orders)
 
 try:
