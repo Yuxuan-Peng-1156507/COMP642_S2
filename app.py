@@ -2,10 +2,15 @@ from models import Customer, Staff, Vegetable, PremadeBox, Order, OrderItem, Bas
 from flask import Flask, request, jsonify, session, redirect, url_for, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
+import threading  
+import time
+from sqlalchemy import text
 from sqlalchemy import func
 from sqlalchemy import desc
 from flask import redirect
+from sqlalchemy import text
+
 
 
 
@@ -14,8 +19,36 @@ from flask import redirect
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  
 
-Session = sessionmaker(bind=engine)
-db_session = Session()
+Session = scoped_session(sessionmaker(bind=engine))
+db_session = Session
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    """
+    Flask 应用上下文结束时关闭数据库会话。
+    如果有异常，则回滚事务。
+    """
+    if exception:
+        db_session.rollback()  # 回滚事务，如果有异常
+    db_session.remove()  # 关闭会话
+
+def keep_connection_alive():
+    """
+    定期运行简单查询以保持数据库连接活跃。
+    每200秒运行一次 SELECT 1。
+    """
+    while True:
+        try:
+            with engine.connect() as connection:
+                connection.execute(text("SELECT 1"))  # 使用 text 执行简单查询
+            time.sleep(200)  # 每200秒运行一次
+        except Exception as e:
+            print(f"Failed to keep the connection alive: {e}")
+
+# 启动后台线程以保持数据库连接活跃
+threading.Thread(target=keep_connection_alive, daemon=True).start()
+
+
 
 @app.route('/')
 def home():
@@ -648,6 +681,40 @@ def generate_sales_report():
 def clear_session():
     session.clear()
     return "Session cleared!"
+
+from models import Customer, Staff, Vegetable, PremadeBox, Order, OrderItem, Base, engine, premade_box_vegetable
+from flask import Flask, request, jsonify, session, redirect, url_for, render_template
+from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timedelta
+from sqlalchemy import func, desc
+from sqlalchemy.orm import sessionmaker, scoped_session
+import threading
+import time
+
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    """
+    Flask 应用上下文结束时关闭数据库会话。
+    如果有异常，则回滚事务。
+    """
+    if exception:
+        db_session.rollback()  # 回滚事务，如果有异常
+    db_session.remove()  # 关闭会话
+
+def keep_connection_alive():
+    """
+    定期运行简单查询以保持数据库连接活跃。
+    每200秒运行一次 SELECT 1。
+    """
+    while True:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))  # 使用 text 执行简单查询
+        time.sleep(200)  # 每200秒运行一次
+
+# 启动后台线程以保持数据库连接活跃
+threading.Thread(target=keep_connection_alive, daemon=True).start()
 
 
 if __name__ == '__main__':
